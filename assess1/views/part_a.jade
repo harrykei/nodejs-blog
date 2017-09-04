@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  style.
+    .cont {
+      font-size: 50px;
+      font-weight: bold;
+      margin: 10px;
+      color: blue;
+      text-align: center;
+    }
+  script.
+    $.get('http://jsonip.com/', function(r){
+      $('#ip').text(r.ip);
+    }, 'jsonp');
+    
+    setInterval(function() {
+      var dt = new Date();
+      var year = dt.getFullYear();
+      var month = dt.getMonth();
+      var day = dt.getDay();
+      var hours = dt.getHours();
+      var mins = dt.getMinutes();
+      var secs = dt.getSeconds();
+
+      mins = (mins < 10 ? "0" : "") + mins;
+      secs = (secs < 10 ? "0" : "") + secs;
+      hours = (hours < 10 ? "0" : "") + hours;
+      $('#clock').text(day+'/'+month+'/'+year+' '+hours+':'+mins+':'+secs);
+    }, 1000);
+  .container
+    .jumbotron
+      h1.text-center= title
+      p(style='margin: 30px 0;')
+      h2= 'IP Address'
+      #ip.cont
+      h2= 'Time'
+      #clock.cont

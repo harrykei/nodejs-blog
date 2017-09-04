@@ -1,0 +1,49 @@
+.row.marketing
+  script(type='text/javascript' src='../js/item.js').
+  .col-lg-12
+    hr
+    - for item in items
+      - var item_name = '#item_'+item.item_id
+        div(id= item_name).col-md-12
+      h1 #{item.title}
+      p
+        | #{item.content}
+      div
+        span(style='margin: 0 2px').label.label-default Posted #{item.cretime}
+        span(style='margin: 0 2px').label.label-primary by #{item.name}
+        .pull-right
+          - if (user_id == item.user_id)
+            button(type='button', onclick='javascript:deleteContent(#{item.item_id});').btn.btn-sm.btn-danger DEL
+      hr
+    div(style='text-align: center')
+      - var numPages = Math.ceil(totalCount/limit)
+      - console.log('page: ' + numPages)
+      - var querystring = '/b?offset='
+      - var curr = offset
+      ul.pagination
+        - if(curr > 1)
+          li
+            a(href="#{querystring}#{curr - 1}") <<
+        - var lower = curr-3; if(lower<=0){lower = 1}
+        - var upper = curr+3; if(upper > numPages){upper = numPages}
+        - for(var i = lower; i <= upper; i++)
+         - if (i != curr)
+            li
+              a(href="#{querystring}#{i}")=i
+          - else
+            li.active
+              a(href="#{querystring}#{i}")=i
+        - if(curr < numPages)
+          li
+            a(href="#{querystring}#{curr + 1}") >>
+    - if (isAuthorized)
+      form#contentForm
+        .form-group
+          label(for='title')
+          | TITLE 
+          span.require *
+          input#title.form-control(type='text', name='title', required='true')
+        .form-group
+          textarea#content.form-control(rows='5', name='content', required='true')
+        .form-group
+          button.btn.btn-primary(type='submit', onclick='javascript:createContent();') Create

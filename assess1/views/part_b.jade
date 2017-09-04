@@ -1,0 +1,66 @@
+extends layout
+
+block content
+  script(src='/js/common.js')
+  .container
+    .jumbotron.text-center
+      h1 Part B (Blog)
+      p I made it using following technics
+      p nodejs, node-express, postgresql, jquery, jade and bootstrap.
+      - if (isAuthorized)
+        p Welcome! #{user_name}
+      p#user_auth
+    include part_b_item
+    block item_list
+    #login-modal.modal.fade(role='dialog')
+      .modal-dialog
+        .modal-content
+          .modal-header(align='center')
+            h1 Login
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span.glyphicon.glyphicon-remove(aria-hidden='true')
+          #div-forms
+            form#login-form
+              .modal-body
+                #div-login-msg
+                  #icon-login-msg.glyphicon.glyphicon-chevron-right
+                  span#text-login-msg Type your username and password.
+                input#login_username.form-control(type='text', placeholder='Username', name='username', required='')
+                input#login_password.form-control(type='password', placeholder='Password', name='password', required='')
+                .checkbox
+                  label
+                    input#remember_chk(type='checkbox', style='margin-top: 10px;')
+                    |  Remember me
+              .modal-footer
+                button.btn.btn-primary.btn-lg.btn-block(type='submit') Login
+            // End # Login Form
+    #signup-modal.modal.fade(role='dialog')
+      .modal-dialog
+        .modal-content
+          .modal-header(align='center')
+            h1 Signup
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span.glyphicon.glyphicon-remove(aria-hidden='true')
+          #div-forms
+            form#signup-form
+              .modal-body
+                #div-signup-msg
+                input#register_username.form-control(type='text', placeholder='Username', name='username', minlength='6', required='true')
+                input#register_email.form-control(type='email', placeholder='E-Mail', name='email', required='true')
+                input#register_password.form-control(type='password', placeholder='Password', name='password', required='true')
+              .modal-footer
+                button.btn.btn-primary.btn-lg.btn-block(type='submit') Signup
+            // End # Signup Form
+    #logout-modal.modal.fade(role='dialog')
+      .modal-dialog
+        .modal-content
+          #div-forms
+            form#logout-form
+              .modal-body
+                p Do you want to logout?
+              .modal-footer
+                button.btn.btn-primary.btn-lg.btn-block(type='submit') Logout
+                button.btn.btn-primary.btn-lg.btn-block(type='button', data-dismiss='modal', aria-label='Close') Cancel
+            // End # Signup Form
+    script(src='/js/login.js')
+  
